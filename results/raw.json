@@ -1,0 +1,17 @@
+{
+  "suite": "raw",
+  "cases": 2500,
+  "verdict_cases": 2500,
+  "summary_oracle_checks": 2500,
+  "whole_graph_oracle_checks": 2500,
+  "whole_graph_oracle_exclusions": 0,
+  "raw_semantics_oracle_checks": 2500,
+  "nonlive": 1674,
+  "mismatches": 0,
+  "wall_seconds": 0.22870534200001202,
+  "cpu_seconds": 0.22869084099999992,
+  "peak_rss_kib": 94888,
+  "workers": 1,
+  "raw_goal_family_cases": 1250,
+  "raw_no_goal_family_cases": 1250
+}

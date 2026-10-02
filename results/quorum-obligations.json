@@ -1,0 +1,10 @@
+[
+  {
+    "honest_quorum_available": true,
+    "min_honest_intersection": 1
+  },
+  {
+    "honest_quorum_available": true,
+    "min_honest_intersection": 1
+  }
+]

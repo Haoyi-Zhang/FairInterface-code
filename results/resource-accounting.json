@@ -1,0 +1,65 @@
+{
+  "campaign_ceiling_cpu_seconds": 28800,
+  "retained_clean_run": {
+    "wall_seconds": 66.09538207900005,
+    "child_cpu_seconds": 75.520377,
+    "controller_cpu_seconds": 1.277129057,
+    "peak_child_rss_kib": 103084,
+    "peak_controller_rss_kib": 92960,
+    "max_concurrent_scientific_workers": 1,
+    "source": "results/summary.json",
+    "environment": {
+      "status": "unknown",
+      "reason": "OS and interpreter metadata were not captured by the historical clean run; the existing KiB fields are retained without inferring the platform."
+    }
+  },
+  "known_instrumented_cumulative_cpu_seconds": 821.302500257,
+  "known_components": [
+    {
+      "label": "instrumented CPU recorded before this continuation",
+      "cpu_seconds": 587.405546062
+    },
+    {
+      "label": "completed suite CPU receipts from the first wrapper-terminated clean attempt",
+      "cpu_seconds": 17.739443234
+    },
+    {
+      "label": "completed suite CPU receipts from the second wrapper-terminated clean attempt",
+      "cpu_seconds": 27.002862178
+    },
+    {
+      "label": "focused binding diagnostic user plus system CPU",
+      "cpu_seconds": 9.78
+    },
+    {
+      "label": "previous retained clean campaign child CPU before fail-closed controller guard",
+      "cpu_seconds": 50.579226
+    },
+    {
+      "label": "previous retained clean campaign controller CPU before fail-closed controller guard",
+      "cpu_seconds": 0.971054629
+    },
+    {
+      "label": "retained final clean campaign child CPU after fail-closed controller guard",
+      "cpu_seconds": 50.165332
+    },
+    {
+      "label": "retained final clean campaign controller CPU after fail-closed controller guard",
+      "cpu_seconds": 0.861530097
+    },
+    {
+      "label": "reviewer-hardening final clean campaign child CPU",
+      "cpu_seconds": 75.520377
+    },
+    {
+      "label": "reviewer-hardening final clean campaign controller CPU",
+      "cpu_seconds": 1.277129057
+    }
+  ],
+  "excluded_from_exact_cpu_total": [
+    "controller and process-startup CPU from wrapper-terminated attempts without final controller receipts",
+    "partial baseline reproduction and short interactive unit, inspection, reference-audit, and focused repair commands that were not all CPU-timed",
+    "LaTeX compilation, PDF rendering, packaging, and metadata inspection, which are not scientific campaign execution"
+  ],
+  "interpretation": "The cumulative value is a lower bound over commands with explicit CPU receipts, not an exact all-process total. It remains far below the 8 CPU-hour scientific ceiling. The retained scientific run used one child at a time. No GPU, swap, external compute, model API, private data, real service, or live security test was used."
+}

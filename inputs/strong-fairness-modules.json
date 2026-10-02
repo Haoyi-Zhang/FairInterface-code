@@ -1,0 +1,122 @@
+[
+  {
+    "states": 6,
+    "tasks": 1,
+    "coloring": "weak-service",
+    "edges": [
+      [
+        0,
+        2,
+        0,
+        false
+      ],
+      [
+        2,
+        3,
+        0,
+        false
+      ],
+      [
+        3,
+        1,
+        0,
+        false
+      ],
+      [
+        3,
+        5,
+        1,
+        false
+      ]
+    ],
+    "initial": [
+      0
+    ],
+    "goals": [
+      5
+    ],
+    "ports": [
+      0,
+      1
+    ],
+    "description": ""
+  },
+  {
+    "states": 6,
+    "tasks": 1,
+    "coloring": "weak-service",
+    "edges": [
+      [
+        0,
+        2,
+        0,
+        false
+      ],
+      [
+        2,
+        3,
+        0,
+        false
+      ],
+      [
+        3,
+        1,
+        0,
+        false
+      ],
+      [
+        3,
+        5,
+        1,
+        false
+      ],
+      [
+        2,
+        4,
+        0,
+        false
+      ],
+      [
+        4,
+        1,
+        0,
+        false
+      ]
+    ],
+    "initial": [
+      0
+    ],
+    "goals": [
+      5
+    ],
+    "ports": [
+      0,
+      1
+    ],
+    "description": ""
+  },
+  {
+    "states": 6,
+    "tasks": 1,
+    "coloring": "weak-service",
+    "edges": [
+      [
+        1,
+        0,
+        0,
+        false
+      ]
+    ],
+    "initial": [
+      0
+    ],
+    "goals": [
+      5
+    ],
+    "ports": [
+      0,
+      1
+    ],
+    "description": ""
+  }
+]

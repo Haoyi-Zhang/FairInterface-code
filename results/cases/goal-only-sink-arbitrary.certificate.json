@@ -1,0 +1,17 @@
+{
+  "mode": "arbitrary-changes",
+  "summary": {
+    "arcs": [],
+    "divergence": []
+  },
+  "live": true,
+  "blocks": [
+    {
+      "vertices": [
+        0
+      ],
+      "rank": 1,
+      "empty": true
+    }
+  ]
+}

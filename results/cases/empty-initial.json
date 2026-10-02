@@ -1,0 +1,12 @@
+{
+  "states": 2,
+  "tasks": 1,
+  "coloring": "weak-service",
+  "edges": [],
+  "initial": [],
+  "goals": [
+    1
+  ],
+  "ports": [],
+  "description": ""
+}

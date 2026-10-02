@@ -1,0 +1,22 @@
+{
+  "mode": "finite-changes",
+  "summary": {
+    "arcs": [
+      [
+        0,
+        0,
+        1,
+        false
+      ]
+    ],
+    "divergence": []
+  },
+  "live": false,
+  "witness": {
+    "start": 0,
+    "prefix": [],
+    "cycle": [
+      0
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "suite": "scaling",
+  "cases": 30,
+  "verdict_cases": 30,
+  "summary_oracle_checks": 30,
+  "whole_graph_oracle_checks": 26,
+  "whole_graph_oracle_exclusions": 4,
+  "raw_semantics_oracle_checks": 0,
+  "nonlive": 15,
+  "mismatches": 0,
+  "wall_seconds": 0.5260737499999095,
+  "cpu_seconds": 0.526079813,
+  "peak_rss_kib": 94888,
+  "workers": 1
+}

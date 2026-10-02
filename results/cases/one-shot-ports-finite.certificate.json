@@ -1,0 +1,31 @@
+{
+  "mode": "finite-changes",
+  "summary": {
+    "arcs": [
+      [
+        0,
+        1,
+        1,
+        false
+      ]
+    ],
+    "divergence": []
+  },
+  "live": true,
+  "blocks": [
+    {
+      "vertices": [
+        0
+      ],
+      "rank": 2,
+      "empty": true
+    },
+    {
+      "vertices": [
+        1
+      ],
+      "rank": 1,
+      "empty": true
+    }
+  ]
+}

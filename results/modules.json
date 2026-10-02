@@ -1,0 +1,15 @@
+{
+  "suite": "modules",
+  "cases": 512,
+  "verdict_cases": 512,
+  "summary_oracle_checks": 512,
+  "whole_graph_oracle_checks": 512,
+  "whole_graph_oracle_exclusions": 0,
+  "raw_semantics_oracle_checks": 0,
+  "nonlive": 488,
+  "mismatches": 0,
+  "wall_seconds": 0.3129010100000187,
+  "cpu_seconds": 0.31290604599999994,
+  "peak_rss_kib": 95780,
+  "workers": 1
+}

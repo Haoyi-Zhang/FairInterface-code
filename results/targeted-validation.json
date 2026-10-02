@@ -1,0 +1,218 @@
+{
+  "scope": "Targeted hidden-divergence definition, resume provenance, environment contract, and PDF punctuation repair",
+  "hidden_divergence_locality": {
+    "tasks": 0,
+    "cross_port_case": {
+      "edges": [
+        "p->q",
+        "q->u",
+        "u->u"
+      ],
+      "module_exports": {
+        "M1_D": [],
+        "M2_D": [
+          1
+        ]
+      },
+      "bound_D": [
+        1
+      ],
+      "expected": {
+        "D(p)": false,
+        "D(q)": true
+      },
+      "summary_implementations_agree": true,
+      "verdicts": {
+        "arbitrary_changes": {
+          "live": false,
+          "certificate_kind": "negative-lasso",
+          "certificate_valid": true
+        },
+        "finite_changes": {
+          "live": false,
+          "certificate_kind": "negative-lasso",
+          "certificate_valid": true
+        }
+      },
+      "reason": "p reaches q by a first-return arc; the hidden infinite suffix starts at q rather than p",
+      "bound_arcs": [
+        [
+          0,
+          1,
+          0,
+          false
+        ]
+      ]
+    },
+    "direct_entry_control": {
+      "edges": [
+        "p->u",
+        "u->u"
+      ],
+      "module_D": [
+        0
+      ],
+      "bound_D": [
+        0
+      ],
+      "expected": {
+        "D(p)": true
+      },
+      "summary_implementations_agree": true,
+      "verdicts": {
+        "arbitrary_changes": {
+          "live": false,
+          "certificate_kind": "negative-lasso",
+          "certificate_valid": true
+        },
+        "finite_changes": {
+          "live": false,
+          "certificate_kind": "negative-lasso",
+          "certificate_valid": true
+        }
+      },
+      "bound_arcs": [
+        [
+          1,
+          1,
+          0,
+          false
+        ]
+      ],
+      "bound_arc_note": "The unrelated exact port q is globally deadlock-completed; no ordinary arc leaves p."
+    }
+  },
+  "resume_validation": {
+    "all_complete": {
+      "commands_executed": [
+        "tests"
+      ],
+      "suite_results_reused": 19,
+      "invalid_records": [],
+      "frozen_totals_match": true,
+      "environment": {
+        "operating_system": "Linux",
+        "os_release": "6.18.44",
+        "machine": "x86_64",
+        "python_implementation": "CPython",
+        "python_version": "3.13.5",
+        "python_executable_name": "python3",
+        "resource_module": "available",
+        "process_group_api": "start_new_session plus os.killpg",
+        "ru_maxrss_native_unit": "KiB",
+        "reported_peak_rss_unit": "KiB"
+      },
+      "wall_seconds": 5.816974453999819,
+      "measured_child_cpu_seconds": 5.790856,
+      "parent_cpu_seconds": 1.640337265,
+      "peak_child_rss_kib": 122500,
+      "peak_parent_rss_kib": 119520,
+      "frozen_totals": {
+        "total_verdict_cases": 244828,
+        "total_summary_oracle_checks": 310463,
+        "total_whole_graph_oracle_checks": 244824,
+        "total_whole_graph_oracle_exclusions": 4,
+        "total_raw_semantics_oracle_checks": 2500,
+        "exhaustive_binding_cases": 65635,
+        "transfer_relation_candidates": 22186,
+        "accepted_transfer_relations": 1358,
+        "transfer_implication_checks": 2116,
+        "mismatches": 0
+      }
+    },
+    "damaged_named_stderr": {
+      "commands_executed": [
+        "tests",
+        "named"
+      ],
+      "suite_results_reused": 18,
+      "invalid_records": [
+        {
+          "suite": "named",
+          "reason": "named.stderr.txt is not empty",
+          "action": "recomputed"
+        }
+      ],
+      "frozen_totals_match": true,
+      "wall_seconds": 6.511603398000034,
+      "measured_child_cpu_seconds": 6.870487,
+      "parent_cpu_seconds": 1.710415555,
+      "peak_child_rss_kib": 122504,
+      "peak_parent_rss_kib": 119476,
+      "environment": {
+        "operating_system": "Linux",
+        "os_release": "6.18.44",
+        "machine": "x86_64",
+        "python_implementation": "CPython",
+        "python_version": "3.13.5",
+        "python_executable_name": "python3",
+        "resource_module": "available",
+        "process_group_api": "start_new_session plus os.killpg",
+        "ru_maxrss_native_unit": "KiB",
+        "reported_peak_rss_unit": "KiB"
+      },
+      "frozen_totals": {
+        "total_verdict_cases": 244828,
+        "total_summary_oracle_checks": 310463,
+        "total_whole_graph_oracle_checks": 244824,
+        "total_whole_graph_oracle_exclusions": 4,
+        "total_raw_semantics_oracle_checks": 2500,
+        "exhaustive_binding_cases": 65635,
+        "transfer_relation_candidates": 22186,
+        "accepted_transfer_relations": 1358,
+        "transfer_implication_checks": 2116,
+        "mismatches": 0
+      }
+    },
+    "unit_level_plans_tested": [
+      "zero completed chunks",
+      "one completed chunk",
+      "all completed chunks",
+      "missing log",
+      "corrupt JSON",
+      "nonempty stderr",
+      "wrong core source range"
+    ],
+    "no_reused_suite_has_a_current_command_receipt": true,
+    "unsupported_platform_guard_simulated": true
+  },
+  "transfer_provenance": {
+    "verdict_cases": 2038,
+    "nonlive": 1216,
+    "source": [
+      "results/transfer.json",
+      "results/transfer.stdout.txt"
+    ],
+    "csv_granularity": "two family aggregate rows",
+    "recomputed_in_this_targeted_repair": false
+  },
+  "historical_clean_environment": {
+    "status": "unknown",
+    "reason": "The retained clean campaign predates environment capture in reproduce.py; its operating system, Python implementation/version, and native ru_maxrss unit were not recorded and are not reconstructed.",
+    "reported_peak_rss_unit": "KiB (as stored by the historical record)"
+  },
+  "current_targeted_environment": {
+    "operating_system": "Linux",
+    "os_release": "6.18.44",
+    "machine": "x86_64",
+    "python_implementation": "CPython",
+    "python_version": "3.13.5",
+    "python_executable_name": "python3"
+  },
+  "unit_tests": {
+    "methods": 22,
+    "status": "passed"
+  },
+  "paper_checks": {
+    "pages": 21,
+    "manual_trailing_periods_removed_from_paragraph_titles": true,
+    "double_punctuation_absent_in_extracted_text": true,
+    "figures_redrawn": false,
+    "paragraph_titles_without_manual_trailing_periods": [
+      "Obligations for a protocol instantiation",
+      "Closure is not a join homomorphism",
+      "Scope of necessity"
+    ],
+    "alphabetic_double_period_sequences_in_extracted_text": 0
+  }
+}
