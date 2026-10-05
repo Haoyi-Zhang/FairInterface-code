@@ -1,6 +1,6 @@
 """One bounded deterministic campaign chunk; all experiment data are generated."""
 from __future__ import annotations
-import argparse,csv,itertools,json,resource,time
+import argparse,csv,itertools,json,resource,sys,time
 from pathlib import Path
 from model import Graph,Edge,parse
 from producer import produce,summarize
@@ -318,7 +318,9 @@ def main():
            'nonlive':negative,'mismatches':0,
            'wall_seconds':time.perf_counter()-began,
            'cpu_seconds':time.process_time()-cpu,
-           'peak_rss_kib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
+           'peak_rss_kib':int((resource.getrusage(resource.RUSAGE_SELF).ru_maxrss+1023)//1024)
+                          if sys.platform=='darwin'
+                          else int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
            'workers':1,**extra}
     # Completion marker written last; failed chunks are never mistaken for success.
     (args.out/(tag+'.json')).write_text(json.dumps(stats,indent=2)+'\n')
