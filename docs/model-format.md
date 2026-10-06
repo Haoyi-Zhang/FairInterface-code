@@ -114,5 +114,5 @@ relation candidates, 1,358 accepted relations, 2,116 unrestricted or
 finite-change implications, 2,038 model verdicts, and 1,216 nonlive verdicts.
 The last two counts are aggregate fields in `results/transfer.json` and its stdout
 receipt; `results/transfer.csv` contains two family summaries rather than
-per-model rows. They were not recomputed by the targeted definition/resume repair.
+per-model rows. The transfer campaign recomputes these aggregate counts.
 These are finite model-level checks, not a source-level protocol refinement.

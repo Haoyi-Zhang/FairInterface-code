@@ -33,6 +33,25 @@ class ContractTests(unittest.TestCase):
                     self.assertEqual(c['live'],not fair_bad_run(g,finite))
                     self.assertTrue(verify(g,c))
                     self.assertEqual(c['summary'],exact_summary(g))
+        # Empty task sets must still produce a nonempty recurrence witness.
+        # Permanent raw blocking differs from a sink exposed by goal deletion.
+        boundary_cases={
+            'empty-task-deadlock':(model(2,0,[]),(False,False)),
+            'empty-task-goal-only':(model(2,0,[(0,1,0,False)]),(True,True)),
+            'empty-task-port-cycle':(model(3,0,[(0,1,0,False),(1,0,0,False)],ports=(0,1)),(False,False)),
+            'empty-task-hidden-cycle':(model(3,0,[(0,1,0,False),(1,1,0,False)]),(False,False)),
+            'empty-task-change-cycle':(model(3,0,[(0,1,0,True),(1,0,0,True),(0,2,0,False),(1,2,0,False)],ports=(0,1)),(False,True)),
+        }
+        for name,(data,expected_modes) in boundary_cases.items():
+            for finite in (False,True):
+                with self.subTest(boundary=name,finite=finite):
+                    graph=parse(data);certificate=produce(graph,finite)
+                    self.assertEqual(certificate['live'],expected_modes[int(finite)])
+                    self.assertEqual(certificate['live'],not raw_fair_bad_run(data,finite))
+                    self.assertEqual(certificate['summary'],exact_summary(graph))
+                    self.assertTrue(verify(graph,certificate))
+                    if not certificate['live']:
+                        self.assertTrue(certificate['witness']['cycle'])
     def test_raw_semantics_oracle(self):
         # This path bypasses model.parse and therefore checks enabledness,
         # goal deletion, and true-deadlock totalisation independently.
@@ -74,6 +93,12 @@ class ContractTests(unittest.TestCase):
     def test_quorums(self):
         self.assertEqual(quorum_obligations(named()['role-reset']),
           [{'honest_quorum_available':True,'min_honest_intersection':1}]*2)
+        for role in named()['role-reset']['role_metadata']['roles']:
+            quorums=[set(q) for q in itertools.combinations(role['members'],3)]
+            for left,right in itertools.product(quorums,repeat=2):
+                self.assertGreaterEqual(len(left & right),2)
+                if left==right:
+                    self.assertEqual(len(left & right),3)
     def test_late_enabledness(self):
         a=model(2,1,[(0,0,0,False)])
         b=model(2,1,[(0,1,1,False)])

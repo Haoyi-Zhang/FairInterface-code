@@ -23,12 +23,18 @@ infinitely often or serviced infinitely often, exactly the condition that color
 `f` occurs infinitely often in `L`. Applying this pointwise proves the
 weak-fairness normalization.
 
+Executions are infinite or finite maximal. A finite maximal execution ending at
+a non-goal deadlock denotes permanent blocking and is prolonged by task-free
+self-stutters. These stutters enable no task, so weak fairness is vacuous on the
+blocked suffix. Liveness quantifies over these behaviors as well as infinite
+raw paths.
+
 The order of preprocessing is semantic. Compute enabledness on the original raw
 graph, add a fully colored ordinary self-loop only at a genuine pending deadlock,
 and only then delete goals. A sink exposed by goal deletion is not a deadlock: it
 may represent a state whose only action must reach success. Under this order,
-fair infinite paths in the normalized pending graph are exactly fair raw
-executions that avoid the goal.
+fair infinite paths in the normalized pending graph are exactly fair
+goal-avoiding raw behaviors under this blocking convention.
 
 Edge addition is non-monotone for the liveness property. With no tasks, adding a
 pending self-loop beside a mandatory goal edge destroys liveness. With one task,
@@ -199,8 +205,9 @@ accepting summary SCC.
 For sufficiency, `D` directly supplies an interior suffix. In an accepting
 summary SCC, choose for each task a macroarc whose capacity contains it and a
 concrete excursion witnessing that occurrence. Connect those chosen macroarcs by
-realizable summary paths and repeat. Different visits to the same macroarc may
-choose different excursions. That freedom is why union capacities are exact for
+realizable summary paths and repeat. When the task set is empty, choose and
+expand any nonempty cycle of the accepting summary SCC instead. Different
+visits to the same macroarc may choose different excursions. That freedom is why union capacities are exact for
 weak-fair recurrence without storing an exponential family of joint masks.
 
 For finite-change liveness, use all arc kinds for prefix reachability but only

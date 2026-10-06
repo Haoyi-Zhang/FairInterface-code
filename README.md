@@ -70,8 +70,14 @@ command exits, and the 22-test receipt. Expected deterministic totals are:
 The transfer suite's 2,038 model-verdict and 1,216 nonlive counts are retained
 aggregate fields in `results/transfer.json` and `results/transfer.stdout.txt`.
 `results/transfer.csv` contains two family summaries, not one row per model. Those
-two aggregate counts were not recomputed during the targeted definition/resume
-repair and must not be described as an independent per-model recheck.
+two aggregate counts are recomputed by the transfer campaign; the CSV is not
+an independent per-model receipt.
+
+The named-case test also exercises five empty-task boundaries in both change
+modes: true blocking, a sole goal edge, port recurrence, hidden recurrence, and
+a marked-only cycle. Every negative certificate must contain a nonempty cycle.
+The quorum test includes identical quorums, whose intersection has three members;
+the stated two-member intersection is a lower bound.
 
 The retained historical clean run reports 66.095382 seconds wall time, 75.520377
 child CPU seconds, 1.277129 controller CPU seconds, 103,084 KiB peak child RSS,
