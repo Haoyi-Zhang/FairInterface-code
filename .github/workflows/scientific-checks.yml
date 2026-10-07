@@ -27,6 +27,10 @@ jobs:
           mkdir -p scientific-output
           ulimit -v 2097152
           ulimit -t 240
+          timeout --signal=TERM --kill-after=5s 40s \
+            python -B tests/reachability_regression.py \
+            > scientific-output/reachability.stdout.txt \
+            2> scientific-output/reachability.stderr.txt
           timeout --signal=TERM --kill-after=5s 240s \
             python -B reproduce.py --output scientific-output/campaign \
             > scientific-output/controller.stdout.txt \

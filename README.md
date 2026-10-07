@@ -171,6 +171,14 @@ external protocol was abstracted faithfully.
 
 ## Trust boundary
 
+Positive verification uses an invocation-local checker-owned adjacency/worklist
+after the unchanged exact summary reconstruction and comparison. Both arc kinds
+remain available to prefix reachability in both change modes; only recurrent
+checks filter marked arcs. `python -B tests/reachability_regression.py` provides
+a portable independent finite regression and runs explicitly in CI before the
+unchanged 22-test/full-campaign receipt. It does not establish a speedup, new
+protocol guarantee or completion of the POSIX campaign on another platform.
+
 The producer and checker implement different summary algorithms but share the
 finite model semantics and parser. The direct summary oracle reconstructs
 first-return masks without importing either summary implementation. The

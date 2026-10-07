@@ -117,12 +117,17 @@ def verify(g: Graph, cert: dict) -> bool:
         return True
     ports=set(g.ports)
     reached=set(g.initial)-g.goals
-    changed=True
-    while changed:
-        prior=set(reached)
-        for u,v,_,_ in summary['arcs']:
-            if u in reached: reached.add(v)
-        changed=(prior!=reached)
+    # Checker-owned, invocation-local prefix index, after exact summary replay.
+    # Marked arcs remain admissible in a prefix even in finite-change mode.
+    adjacency={}
+    for u,v,_,_ in summary['arcs']:
+        adjacency.setdefault(u,[]).append(v)
+    pending=list(reached)
+    while pending:
+        for v in adjacency.get(pending.pop(),()):
+            if v not in reached:
+                reached.add(v)
+                pending.append(v)
     if reached & set(summary['divergence']): raise ValueError('reachable hidden fair divergence')
     records=cert['blocks']
     if not isinstance(records,list) or len(records)>len(ports): raise ValueError('invalid blocks')
