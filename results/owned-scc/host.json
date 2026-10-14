@@ -1,0 +1,15 @@
+{
+  "source": "Local read-only PowerShell Get-CimInstance Win32_Processor and Win32_OperatingSystem; observed 2026-10-14. No remote host inferred.",
+  "cpu": {
+    "Name": "12th Gen Intel(R) Core(TM) i7-12700KF",
+    "NumberOfCores": 12,
+    "NumberOfLogicalProcessors": 20,
+    "MaxClockSpeed": 3600
+  },
+  "os": {
+    "Caption": "Microsoft Windows 11 专业版",
+    "Version": "10.0.28000",
+    "BuildNumber": "28000",
+    "OSArchitecture": "64 位"
+  }
+}

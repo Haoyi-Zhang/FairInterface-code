@@ -1,0 +1,15 @@
+{
+  "suite": "core-3-6000-8000",
+  "cases": 24000,
+  "verdict_cases": 24000,
+  "summary_oracle_checks": 24000,
+  "whole_graph_oracle_checks": 24000,
+  "whole_graph_oracle_exclusions": 0,
+  "raw_semantics_oracle_checks": 0,
+  "nonlive": 17028,
+  "mismatches": 0,
+  "wall_seconds": 2.952282425,
+  "cpu_seconds": 2.9509485150000003,
+  "peak_rss_kib": 26860,
+  "workers": 1
+}

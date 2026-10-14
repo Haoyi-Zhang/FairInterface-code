@@ -1,5 +1,6 @@
 from __future__ import annotations
-import copy,csv,itertools,json,shutil,sys,tempfile,unittest
+import copy,csv,itertools,json,os,shutil,subprocess,sys,tempfile,time,unittest
+from unittest.mock import patch as mock_patch
 from pathlib import Path
 ARTIFACT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ARTIFACT))
@@ -12,11 +13,88 @@ from raw_oracle import raw_fair_bad_run
 from summary_oracle import exact_summary
 from interfaces import bind,close_join,export,join_exports,module_graph,validate_family
 from refinement import check_refinement
+from monolithic import live as monolithic_live
+from process_metrics import self_peak_kib, process_cpu_seconds, WindowsJob
 import reproduce as reproduction
 from fixtures import (named,model,strong_modules,random_families,quorum_obligations,
                       expanded_role_model)
 
 class ContractTests(unittest.TestCase):
+    def test_close_join_strict_admission(self):
+        graph=Graph(2,1,(),(0,),frozenset(),(0,1))
+        base={'arcs':[[0,1,0,False]],'divergence':[],
+              'enabled':[0,0],'outgoing':[True,True]}
+        self.assertEqual(close_join(graph,base),{'arcs':[[0,1,1,False]],'divergence':[]})
+        for index,value in enumerate((False,True,True,0)):
+            item=copy.deepcopy(base);item['arcs'][0][index]=value
+            with self.subTest(field=index), self.assertRaises(ValueError):close_join(graph,item)
+        for field,value in (('arcs',None),('arcs',[[0,1,0]]),('divergence',[False]),
+                            ('divergence',None),('enabled',None),('outgoing',[0,True])):
+            with self.subTest(field=field,value=value), self.assertRaises(ValueError):
+                close_join(graph,{**base,field:value})
+    def test_monolithic_quantifier(self):
+        for name,data in named().items():
+            graph=parse(data)
+            for finite in (False,True):
+                with self.subTest(name=name,finite=finite):
+                    self.assertEqual(monolithic_live(graph,finite),not raw_fair_bad_run(data,finite))
+        # The recurrent ordinary cycle is reachable only via one marked edge.
+        graph=parse(model(3,1,[[0,1,0,True],[1,1,1,False]],ports=(0,1)))
+        self.assertFalse(monolithic_live(graph,True))
+        # Direct graphs have no implicit raw-deadlock completion; k=0 still
+        # requires an actual nonempty cycle, never a reflexive zero-length path.
+        self.assertTrue(monolithic_live(Graph(1,0,(),(0,),frozenset(),(0,))))
+    def test_native_measurement(self):
+        self.assertGreater(self_peak_kib(),0)
+        reproduction._require_supported_environment()
+        if os.name=='nt':
+            # Own benign parent/grandchild only. Hold both behind a file gate
+            # until the parent is assigned to the job, then kill the entire job.
+            with tempfile.TemporaryDirectory() as rawdir:
+                gate=Path(rawdir)/'gate'
+                ready=Path(rawdir)/'ready'
+                done=Path(rawdir)/'done'
+                child_code=('import pathlib,time;'
+                            f'pathlib.Path({str(ready)!r}).touch();'
+                            'time.sleep(1.5);'
+                            f'pathlib.Path({str(done)!r}).touch()')
+                parent_code=('import pathlib,time,subprocess,sys\n'
+                    f'while not pathlib.Path({str(gate)!r}).exists(): time.sleep(.01)\n'
+                    f'subprocess.Popen([sys.executable,"-B","-c",{child_code!r}])\n'
+                    'time.sleep(10)\n')
+                process=subprocess.Popen([sys.executable,'-B','-c',parent_code])
+                job=WindowsJob()
+                try:
+                    job.assign(process)
+                    gate.touch()
+                    deadline=time.monotonic()+3
+                    while not ready.exists() and time.monotonic()<deadline:time.sleep(.01)
+                    self.assertTrue(ready.exists())
+                    job.terminate()
+                    process.wait(timeout=3)
+                    self.assertGreaterEqual(process_cpu_seconds(process),0)
+                    self.assertGreaterEqual(job.cpu_seconds(),process_cpu_seconds(process))
+                    time.sleep(1.7)
+                    self.assertFalse(done.exists())
+                finally:
+                    job.close()
+                    if process.poll() is None:process.kill();process.wait()
+            # The worker reports its own CPU; accounting must include it even
+            # when the direct handle is merely the Windows venv launcher.
+            with tempfile.TemporaryDirectory() as rawdir:
+                receipt=Path(rawdir)/'cpu.json'
+                code=('import json,time,pathlib\n'
+                      'while time.process_time()<.2: sum(range(1000))\n'
+                      f'pathlib.Path({str(receipt)!r}).write_text(json.dumps(time.process_time()))')
+                process=subprocess.Popen([sys.executable,'-B','-c',code])
+                job=WindowsJob()
+                try:
+                    job.assign(process)
+                    self.assertEqual(process.wait(timeout=3),0)
+                    self.assertGreater(job.cpu_seconds(),.1)
+                    self.assertGreaterEqual(job.cpu_seconds()+.02,json.loads(receipt.read_text()))
+                finally:
+                    job.close()
     def test_named(self):
         expected={'goal-enabled':(True,True),'true-deadlock':(False,False),
           'goal-only-sink':(True,True),'hidden-divergence':(False,False),
@@ -136,16 +214,32 @@ class ContractTests(unittest.TestCase):
                       {'edges':[[0,0,-1,False]]},{'edges':[[0,0,0,0]]}):
             with self.assertRaises(ValueError):parse({**base,**patch})
 
-        # The verified POSIX path succeeds, while a platform without the
-        # resource API is rejected before any child process starts.
+        # Simulate the missing POSIX resource API separately from this host's
+        # real native path. This is an admission test, not POSIX execution.
         reproduction._require_supported_environment()
-        saved_resource=reproduction.resource
-        try:
-            reproduction.resource=None
+        with mock_patch.object(reproduction.os,'name','posix'), mock_patch.object(reproduction,'resource',None):
             with self.assertRaisesRegex(RuntimeError,'Native Windows is not supported'):
                 reproduction._require_supported_environment()
-        finally:
-            reproduction.resource=saved_resource
+
+        current=ARTIFACT/'results/owned-scc/normal'
+        named_job=next(job for job in reproduction._jobs() if reproduction._job_tag(job)=='named')
+        with tempfile.TemporaryDirectory() as rawdir:
+            destination=Path(rawdir)
+            for path in reproduction._required_suite_paths(current,named_job):
+                shutil.copy2(path,destination/path.name)
+            reused,pending,invalid=reproduction._classify_resume(destination,[named_job])
+            self.assertEqual((len(reused),len(pending),len(invalid)),(0,1,1))
+            shutil.copy2(current/'named-costs.csv',destination/'named-costs.csv')
+            reused,pending,invalid=reproduction._classify_resume(destination,[named_job])
+            self.assertEqual((len(reused),len(pending),len(invalid)),(1,0,0))
+            # Deliberately malformed metadata in this private unit fixture, not
+            # a new scientific record: booleans cannot masquerade as counters.
+            result=json.loads((destination/'named.json').read_text())
+            result['producer_ns']=False
+            for name in ('named.json','named.stdout.txt'):
+                (destination/name).write_text(json.dumps(result))
+            reused,pending,invalid=reproduction._classify_resume(destination,[named_job])
+            self.assertEqual((len(reused),len(pending),len(invalid)),(0,1,1))
 
         # Resume planning distinguishes actual execution from validated reuse.
         # The retained bundles supply deterministic fixtures; no campaign is run
@@ -173,7 +267,7 @@ class ContractTests(unittest.TestCase):
                 ],
                 'invalid_resume_records_recomputed':invalid,
             })
-            reproduction._validate_result(result,destination,jobs)
+            reproduction._validate_result(result,destination,jobs,expected_test_methods=22)
             path=destination/'summary.json'
             path.write_text(json.dumps(result,indent=2)+'\n')
             return json.loads(path.read_text())

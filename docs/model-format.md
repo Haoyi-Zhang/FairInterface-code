@@ -116,3 +116,24 @@ The last two counts are aggregate fields in `results/transfer.json` and its stdo
 receipt; `results/transfer.csv` contains two family summaries rather than
 per-model rows. The transfer campaign recomputes these aggregate counts.
 These are finite model-level checks, not a source-level protocol refinement.
+
+## Closure admission and paired SCC measurements
+
+`close_join` is independently callable and validates its own input: arcs are
+four-element lists with literal integer endpoints/capacities and a literal
+Boolean change flag; divergence identifiers are literal integers; port vectors
+are lists of the exact boundary length. Boolean aliases for states or masks and
+numeric aliases for flags are rejected. This does not authenticate exports or
+establish a source-module correspondence; `validate_family` and the theorem's
+sealed-interior premises remain necessary.
+
+`monolithic.live` receives the same normalized Graph and change mode as the
+producer, but uses no ports or summaries. It computes both-kind prefix
+reachability before restricting recurrent edges in finite-change mode. Cyclic
+SCC color union decides the same property, including empty-task nonempty-cycle
+cases. It supplies a trusted Boolean decision, not a certificate. Paired timing
+rows bind the exact normalized graph serialization (sorted JSON keys, compact
+separators), mode and evaluation order to producer/checker/SCC intervals. The
+transfer order is ordinary abstract, ordinary concrete, mixed abstract in both
+modes, then mixed concrete in both modes. These rows expose its formerly
+aggregate-only 2,038 evaluations without changing the scientific population.

@@ -1,6 +1,6 @@
 """One bounded deterministic campaign chunk; all experiment data are generated."""
 from __future__ import annotations
-import argparse,csv,itertools,json,resource,sys,time
+import argparse,csv,hashlib,itertools,json,sys,time
 from pathlib import Path
 from model import Graph,Edge,parse
 from producer import produce,summarize
@@ -10,13 +10,23 @@ from raw_oracle import raw_fair_bad_run
 from summary_oracle import exact_summary
 from interfaces import bind
 from refinement import check_refinement
+from process_metrics import self_peak_kib
+from monolithic import live as monolithic_live
 from fixtures import (named,random_closed,random_families,model,
                       quorum_obligations,expanded_role_model)
 
+MEASUREMENTS=[]
 
 def evaluate(g,finite=False,oracle=True):
+    began=time.perf_counter_ns()
     certificate=produce(g,finite)
+    produced=time.perf_counter_ns()
     verify(g,certificate)
+    verified=time.perf_counter_ns()
+    baseline=monolithic_live(g,finite)
+    decided=time.perf_counter_ns()
+    if certificate['live'] != baseline:
+        raise AssertionError('ordinary whole-graph SCC disagreement')
     if certificate['summary'] != exact_summary(g):
         raise AssertionError('exact summary-oracle disagreement')
     product_used=False
@@ -24,6 +34,14 @@ def evaluate(g,finite=False,oracle=True):
         product_used=True
         if certificate['live']==fair_bad_run(g,finite):
             raise AssertionError('whole-graph product-oracle disagreement')
+    # Source binding is outside the solver timers. Core/raw/transfer encodings
+    # and generated JSONL retain their existing meanings and population sizes.
+    source={'states':g.n,'tasks':g.k,'edges':[[e.src,e.dst,e.color,e.change] for e in g.edges],
+            'initial':list(g.initial),'goals':sorted(g.goals),'ports':list(g.ports)}
+    binding=hashlib.sha256(json.dumps(source,sort_keys=True,separators=(',',':')).encode()).hexdigest()
+    MEASUREMENTS.append([len(MEASUREMENTS),binding,g.n,g.k,len(g.edges),len(g.ports),
+                         int(finite),int(baseline),produced-began,verified-produced,
+                         decided-verified])
     return certificate,product_used
 
 
@@ -310,6 +328,11 @@ def main():
 
     with (args.out/(tag+'.csv')).open('w',newline='') as handle:
         writer=csv.writer(handle);writer.writerow(header);writer.writerows(rows)
+    with (args.out/(tag+'-costs.csv')).open('w',newline='') as handle:
+        writer=csv.writer(handle)
+        writer.writerow(['evaluation','normalized_graph_sha256','states','tasks','normalized_edges','ports',
+                         'finite_changes','live','producer_ns','checker_ns','monolithic_ns'])
+        writer.writerows(MEASUREMENTS)
     stats={'suite':tag,'cases':count,'verdict_cases':verdicts,
            'summary_oracle_checks':summary_cases,
            'whole_graph_oracle_checks':product_checks,
@@ -318,10 +341,11 @@ def main():
            'nonlive':negative,'mismatches':0,
            'wall_seconds':time.perf_counter()-began,
            'cpu_seconds':time.process_time()-cpu,
-           'peak_rss_kib':int((resource.getrusage(resource.RUSAGE_SELF).ru_maxrss+1023)//1024)
-                          if sys.platform=='darwin'
-                          else int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss),
-           'workers':1,**extra}
+           'peak_rss_kib':self_peak_kib(),
+           'workers':1,'monolithic_checks':len(MEASUREMENTS),
+           'producer_ns':sum(row[-3] for row in MEASUREMENTS),
+           'checker_ns':sum(row[-2] for row in MEASUREMENTS),
+           'monolithic_ns':sum(row[-1] for row in MEASUREMENTS),**extra}
     # Completion marker written last; failed chunks are never mistaken for success.
     (args.out/(tag+'.json')).write_text(json.dumps(stats,indent=2)+'\n')
     print(json.dumps(stats))

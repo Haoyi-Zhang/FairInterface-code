@@ -437,3 +437,21 @@ shared parsing/normalization path on its bounded family, but all programs still
 implement the same mathematical specification. A common definition error, an
 invalid source-to-model abstraction, or a flaw in the hand proof could survive.
 No independent human or proof-assistant verification is claimed.
+
+## 9. Ordinary whole-graph decision control
+
+Let Q be the states reachable from a pending initial using all pending edges.
+In unrestricted mode take the graph induced by Q. In finite-change mode remove
+marked edges only after Q has been computed. A bad fair execution exists iff
+this suffix graph has a cyclic SCC whose internal edge-color union is F.
+Necessity follows by taking the recurrent states of a bad run (after its last
+change in the finite-change case); their enclosing SCC contains every recurrent
+color. For sufficiency choose a reachable state of an accepting SCC and, for
+each color, an internal edge carrying it. Strong connectivity connects these
+edges into a repeatable closed walk. If k=0 choose one actual cycle instead.
+The prefix may use marked edges; deleting them before reachability would change
+the quantifier and can give a false live verdict. Iterative whole-graph SCC
+enumeration and a single color-union pass take O(n+m) graph/mask operations and
+O(n+m) storage. This is the standard generalized-Buechi criterion, not a new
+emptiness theorem. `src/monolithic.py` is a separate implementation of this
+control; the exact boundary summaries still provide different output evidence.

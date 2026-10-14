@@ -1,0 +1,6 @@
+{
+  "self_cpu_seconds_before_exit": 4.875,
+  "peak_rss_kib": 36004,
+  "optimize": 1,
+  "dont_write_bytecode": true
+}

@@ -41,7 +41,7 @@ proof-assistant derivation. Paths are relative to the standalone artifact root.
 
 ## Validation inventory and trust boundary
 
-A clean controller invocation in `reproduce.py` executes 22 unit tests and 19
+A clean controller invocation in `reproduce.py` executes 25 unit tests and 19
 bounded campaign chunks sequentially. A resumed invocation always reruns the
 current tests, validates each reused suite's JSON, exact CSV header/content range,
 stdout receipt, empty stderr, suite tag, frozen case count, source parameters, and
@@ -59,9 +59,32 @@ implementation choices:
 2. snapshot vertex-elimination checking;
 3. direct first-return state/mask products;
 4. an interface-free whole-graph state/mask product; and
-5. a parser-independent raw weak-service oracle.
+5. a parser-independent raw weak-service oracle; and
+6. an ordinary whole-graph SCC decision without summary/certificate helpers.
 
 The trusted boundary still includes the finite input model, task naming, the
 admissibility/refinement arguments supplied by a protocol user, Python's runtime,
 and the hand proofs. The artifact does not certify a source-to-model extraction,
 a quorum-safety argument, cryptography, or a scheduler assumption.
+
+## Same-input cost and current receipts
+
+`results/owned-scc/normal` and `optimized` contain clean executions of the same
+244,828 verdict evaluations (not two populations). Each `*-costs.csv` binds the
+normalized graph, change mode and evaluation order to the ordinary SCC decision
+and producer/checker intervals. This includes 2,038 transfer evaluations formerly
+retained only in aggregate. Old CSVs and JSON remain unchanged historical records.
+`analyze_costs.py` compares every historical scientific CSV cell, excluding only
+the measured scaling-time column, and checks mode/count/cost aggregates. The
+three stages share input acquisition; full campaign costs separately retain all
+generation, normalization, export/join, oracle, IO, startup and validation work.
+The SCC Boolean guarantee is identical, but its output is not a certificate.
+No incremental-maintenance or isolated end-to-end speedup is established.
+
+`test_close_join_strict_admission` checks the independently callable closure
+boundary against Boolean/integer aliases and malformed list shapes. Native
+Windows job accounting includes interpreter descendants; the arithmetic worker
+checks that its self CPU is not lost when `python.exe` is a launcher. The benign
+parent/grandchild control checks job termination. These tests do not establish
+an untrusted-process sandbox or native protocol deployment. The paper's new
+declaration reports AI assistance without asserting human sign-off.

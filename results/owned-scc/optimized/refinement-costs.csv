@@ -1,0 +1,3 @@
+evaluation,normalized_graph_sha256,states,tasks,normalized_edges,ports,finite_changes,live,producer_ns,checker_ns,monolithic_ns
+0,f5421b6f9ccba44173fa015067c84da346728e05ee12f64f611034faba8e373c,29,5,133,28,0,0,6919400,505700,187000
+1,f5421b6f9ccba44173fa015067c84da346728e05ee12f64f611034faba8e373c,29,5,133,28,1,1,5254100,495600,94800

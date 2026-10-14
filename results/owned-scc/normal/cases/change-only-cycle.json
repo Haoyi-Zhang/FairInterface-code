@@ -1,0 +1,42 @@
+{
+  "states": 3,
+  "tasks": 1,
+  "coloring": "justice",
+  "edges": [
+    [
+      0,
+      1,
+      1,
+      true
+    ],
+    [
+      1,
+      0,
+      1,
+      true
+    ],
+    [
+      0,
+      2,
+      1,
+      false
+    ],
+    [
+      1,
+      2,
+      1,
+      false
+    ]
+  ],
+  "initial": [
+    0
+  ],
+  "goals": [
+    2
+  ],
+  "ports": [
+    0,
+    1
+  ],
+  "description": ""
+}

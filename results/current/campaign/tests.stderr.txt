@@ -1,0 +1,27 @@
+test_bad_json_and_schema (__main__.ContractTests.test_bad_json_and_schema) ... ok
+test_cannot_use_zero_path_as_loop (__main__.ContractTests.test_cannot_use_zero_path_as_loop) ... ok
+test_capacity_information_separation (__main__.ContractTests.test_capacity_information_separation) ... ok
+test_certificate_mutations (__main__.ContractTests.test_certificate_mutations) ... ok
+test_enabled_before_goal_deletion (__main__.ContractTests.test_enabled_before_goal_deletion) ... ok
+test_grouping_retains_exact_ports (__main__.ContractTests.test_grouping_retains_exact_ports) ... ok
+test_interface_component_separations (__main__.ContractTests.test_interface_component_separations) ... ok
+test_late_deadlock_completion (__main__.ContractTests.test_late_deadlock_completion) ... ok
+test_late_enabledness (__main__.ContractTests.test_late_enabledness) ... ok
+test_module_sealing (__main__.ContractTests.test_module_sealing) ... ok
+test_named (__main__.ContractTests.test_named) ... ok
+test_quorums (__main__.ContractTests.test_quorums) ... ok
+test_random_module_pilot (__main__.ContractTests.test_random_module_pilot) ... ok
+test_raw_interface_join_algebra (__main__.ContractTests.test_raw_interface_join_algebra) ... ok
+test_raw_semantics_oracle (__main__.ContractTests.test_raw_semantics_oracle) ... ok
+test_reference_audit_inventory (__main__.ContractTests.test_reference_audit_inventory) ... ok
+test_refinement_deadlock_totalization (__main__.ContractTests.test_refinement_deadlock_totalization) ... ok
+test_refinement_fixture (__main__.ContractTests.test_refinement_fixture) ... ok
+test_refinement_mutations (__main__.ContractTests.test_refinement_mutations) ... ok
+test_rename_tasks (__main__.ContractTests.test_rename_tasks) ... ok
+test_strong_fairness_separation (__main__.ContractTests.test_strong_fairness_separation) ... ok
+test_unmentioned_states_are_not_claimed (__main__.ContractTests.test_unmentioned_states_are_not_claimed) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 9.483s
+
+OK

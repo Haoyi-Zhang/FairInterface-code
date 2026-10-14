@@ -1,0 +1,19 @@
+{
+  "suite": "core-3-8000-10000",
+  "cases": 24000,
+  "verdict_cases": 24000,
+  "summary_oracle_checks": 24000,
+  "whole_graph_oracle_checks": 24000,
+  "whole_graph_oracle_exclusions": 0,
+  "raw_semantics_oracle_checks": 0,
+  "nonlive": 20200,
+  "mismatches": 0,
+  "wall_seconds": 4.272861400007969,
+  "cpu_seconds": 3.96875,
+  "peak_rss_kib": 36908,
+  "workers": 1,
+  "monolithic_checks": 24000,
+  "producer_ns": 1758261200,
+  "checker_ns": 838926600,
+  "monolithic_ns": 353503500
+}

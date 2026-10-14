@@ -1,0 +1,298 @@
+{
+  "unique_verdict_population": 244828,
+  "repeated_validation_modes": [
+    0,
+    1
+  ],
+  "historical_scientific_rows_unchanged": true,
+  "normal_optimized_normalized_graph_bindings_identical": true,
+  "normal": {
+    "paired_costs": {
+      "verdict_evaluations": 244828,
+      "producer_ns": 9757343000,
+      "checker_ns": 5301693400,
+      "monolithic_ns": 1989139300,
+      "summed_scientific_self_cpu_seconds": 35.8125
+    },
+    "wall_seconds": 48.25,
+    "measured_child_cpu_seconds": 42.140625,
+    "parent_cpu_seconds": 3.34375,
+    "peak_child_rss_kib": 53412,
+    "peak_parent_rss_kib": 44056,
+    "environment": {
+      "operating_system": "Windows",
+      "os_release": "11",
+      "machine": "AMD64",
+      "python_implementation": "CPython",
+      "python_version": "3.12.14",
+      "python_executable_name": "python.exe",
+      "resource_module": "unavailable",
+      "process_group_api": "Windows kill-on-close job",
+      "ru_maxrss_native_unit": "not applicable",
+      "memory_api": "K32GetProcessMemoryInfo PeakWorkingSetSize",
+      "child_cpu_api": "QueryInformationJobObject total kernel plus user, including descendants",
+      "optimize": 0,
+      "reported_peak_rss_unit": "KiB"
+    }
+  },
+  "optimized": {
+    "paired_costs": {
+      "verdict_evaluations": 244828,
+      "producer_ns": 19128289100,
+      "checker_ns": 9599269800,
+      "monolithic_ns": 3796859100,
+      "summed_scientific_self_cpu_seconds": 64.578125
+    },
+    "wall_seconds": 93.42200000002049,
+    "measured_child_cpu_seconds": 80.125,
+    "parent_cpu_seconds": 4.5625,
+    "peak_child_rss_kib": 54156,
+    "peak_parent_rss_kib": 45812,
+    "environment": {
+      "operating_system": "Windows",
+      "os_release": "11",
+      "machine": "AMD64",
+      "python_implementation": "CPython",
+      "python_version": "3.12.14",
+      "python_executable_name": "python.exe",
+      "resource_module": "unavailable",
+      "process_group_api": "Windows kill-on-close job",
+      "ru_maxrss_native_unit": "not applicable",
+      "memory_api": "K32GetProcessMemoryInfo PeakWorkingSetSize",
+      "child_cpu_api": "QueryInformationJobObject total kernel plus user, including descendants",
+      "optimize": 1,
+      "reported_peak_rss_unit": "KiB"
+    }
+  },
+  "measurement_scope": "Paired stages share already-normalized input; fixed producer/checker/SCC order. Full campaign cost includes input generation, module exports/join, all oracles, serialization, IO, tests, process startup and controller validation. No isolated baseline end-to-end, incremental maintenance, confidence interval, or speedup claim.",
+  "source_files": [
+    {
+      "mode": 0,
+      "file": "normal/core-2-0-625-costs.csv",
+      "bytes": 249048,
+      "sha256": "9344b578db4e4f04e514b7f57e4bcbc9eef1f414ec09a787a22e5a87b40c25c6"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-0-2000-costs.csv",
+      "bytes": 2413382,
+      "sha256": "1abc75f63baa0e43868c5711bc303da0b6ac3ddb7d82d4b9a26e3ddf06ae7e1c"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-2000-4000-costs.csv",
+      "bytes": 2413507,
+      "sha256": "13fd5cabdaa9c59887f56a282bbb3cd98c054badcbfa42aaa6e79eb23bac4e8c"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-4000-6000-costs.csv",
+      "bytes": 2414381,
+      "sha256": "3bb130abb264bf262421e0eccb987c9d6365c8547c16d1a8e1417f0a0f5ae253"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-6000-8000-costs.csv",
+      "bytes": 2413488,
+      "sha256": "11db413d8d92ab9a512f068cf24f5be5c28f2f9ac7c1f70038ff8cc678d221a0"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-8000-10000-costs.csv",
+      "bytes": 2414064,
+      "sha256": "8d64115973fb260f420cd1de3710018988d5f63ebd0084b876d3da4458f94241"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-10000-12000-costs.csv",
+      "bytes": 2414148,
+      "sha256": "c8b22d74814b020193c0ec4b4d4f920bfc610460791de80cca8c9dd5b157aef1"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-12000-14000-costs.csv",
+      "bytes": 2413614,
+      "sha256": "908fc6f33049321f411530eaa1761f0204d9b17a34fb4b0608a2c85753039a1c"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-14000-16000-costs.csv",
+      "bytes": 2413602,
+      "sha256": "35d592d5d855642c0c187c52f3dd5e1563ca0983d60d5d4886f207396f3341d7"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-16000-18000-costs.csv",
+      "bytes": 2414354,
+      "sha256": "74ba9b177c13c0b01d1953793bb5f75ecdc25e4c7535dca046707aad4d754c6f"
+    },
+    {
+      "mode": 0,
+      "file": "normal/core-3-18000-19683-costs.csv",
+      "bytes": 2029762,
+      "sha256": "49ed7f0acc96ee3b923fe24c0bb4ca7d554a323e5bf6db2298fefed0af88efe8"
+    },
+    {
+      "mode": 0,
+      "file": "normal/closed-costs.csv",
+      "bytes": 103185,
+      "sha256": "e213ad7870246de9ea8d97c9db9d3175b2abda58d9830f8ce0d7e4b68545cafa"
+    },
+    {
+      "mode": 0,
+      "file": "normal/modules-costs.csv",
+      "bytes": 51700,
+      "sha256": "5e85115846d91862dc5976320bcd557421ee0e2ee0f8991de2758f69ac0274b3"
+    },
+    {
+      "mode": 0,
+      "file": "normal/binding-costs.csv",
+      "bytes": 129,
+      "sha256": "85dfcdb5f37a0e2d673b3d48bb443399bd23bcddb2484821f80d626519acdafa"
+    },
+    {
+      "mode": 0,
+      "file": "normal/refinement-costs.csv",
+      "bytes": 341,
+      "sha256": "e006d0938a5202b9efdf019b6ff24b12d6138d6eacb0e7041f37c1e988c6fd0f"
+    },
+    {
+      "mode": 0,
+      "file": "normal/transfer-costs.csv",
+      "bytes": 204030,
+      "sha256": "6bdc23e70a2d24135edff2286dcdc71156c7c54a44f24f8db7ebe3b6399af3f5"
+    },
+    {
+      "mode": 0,
+      "file": "normal/raw-costs.csv",
+      "bytes": 249950,
+      "sha256": "09102baa782fbae82aedd28c225c8e5bbe60603cbc49017c7b9b4c17fbc3524b"
+    },
+    {
+      "mode": 0,
+      "file": "normal/named-costs.csv",
+      "bytes": 2699,
+      "sha256": "a0e4eb732dc70bf4e0e34382a25f5542277b4a332c839e38dfeea915c12cc2b4"
+    },
+    {
+      "mode": 0,
+      "file": "normal/scaling-costs.csv",
+      "bytes": 3247,
+      "sha256": "14e28bfe2345663e03c3eb1fa88eb675e1591d2ed7ef4bdb33d95a9a328bbe72"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-2-0-625-costs.csv",
+      "bytes": 250999,
+      "sha256": "8025891fe4342327e12af09891ab0e72846d780d3e4d38bf0b68f0e9af259ca2"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-0-2000-costs.csv",
+      "bytes": 2433327,
+      "sha256": "4599871efda74059af1750a7e04b1815fcff03b4426fbb51bad7c50d6cfadac3"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-2000-4000-costs.csv",
+      "bytes": 2436709,
+      "sha256": "a24446ab377b2b93aea5f45b6c3b1669ee7c288f5c06472dc2459cfc7fa81a2f"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-4000-6000-costs.csv",
+      "bytes": 2436874,
+      "sha256": "2672f9b0f15aefa37447b6c216ccb5f1c981ead7ca6a84b5fe431b125800b551"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-6000-8000-costs.csv",
+      "bytes": 2435203,
+      "sha256": "08f79fb03eeec50df50908be120075ec88e43286874bf3c61f9a525641a2759c"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-8000-10000-costs.csv",
+      "bytes": 2436311,
+      "sha256": "3459559935a47c196f2875c19a6fd55da264d59831c75bd9a72a3abd9d424791"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-10000-12000-costs.csv",
+      "bytes": 2440064,
+      "sha256": "61a21cb207caab3427814bfadfbdd9d8a2dfd3bac87d1179b6a6e05b4c6cc0cf"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-12000-14000-costs.csv",
+      "bytes": 2436726,
+      "sha256": "5bb49a77f3d2121b39727de750f58b13ab82788dc763d1593d8b0ac5a71728a6"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-14000-16000-costs.csv",
+      "bytes": 2437134,
+      "sha256": "9ff9dac4112ddeefd1a34b73020ee9695ba8e53cf9abb2701cd6c738030096b6"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-16000-18000-costs.csv",
+      "bytes": 2436726,
+      "sha256": "2eb974dea871b17d05f91142c8ef0cae72ccd71286988416ed4aae92286159c7"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/core-3-18000-19683-costs.csv",
+      "bytes": 2053026,
+      "sha256": "642385f7115d6da6bd816dfe5602c985ecb4b999ec6c361f4bd7bb6dd713080f"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/closed-costs.csv",
+      "bytes": 104338,
+      "sha256": "9d0e2bd9e1e574069b724f7f0fc6a24f6127a304a82396fe70cec3564d87f459"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/modules-costs.csv",
+      "bytes": 52271,
+      "sha256": "88a7cc07bd5308f1dd65aad940bba64dd1b0f4c66dfddd5f116d34a7a67f487a"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/binding-costs.csv",
+      "bytes": 129,
+      "sha256": "85dfcdb5f37a0e2d673b3d48bb443399bd23bcddb2484821f80d626519acdafa"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/refinement-costs.csv",
+      "bytes": 340,
+      "sha256": "f9cb19618574addddb881002087852e16edcd227a4d18aa6d3b117245429696b"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/transfer-costs.csv",
+      "bytes": 203783,
+      "sha256": "4268c4e65a6c40e0756b587234c8931cdee48faa0522b26c0eed50cf50a90582"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/raw-costs.csv",
+      "bytes": 249834,
+      "sha256": "b4f63560b7f7b45379248d63b699f8899e0205d1d2d20380a278396cebd8efd5"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/named-costs.csv",
+      "bytes": 2708,
+      "sha256": "f1c1aaed11fb4c74ad55caafb64469898beca7ae96cf5e3f9a36b11c92ddc948"
+    },
+    {
+      "mode": 1,
+      "file": "optimized/scaling-costs.csv",
+      "bytes": 3237,
+      "sha256": "1d59a5a0551c433f0e4431849ff2fd58fe6d72f600876d8d0f4bd56cffd737ab"
+    }
+  ]
+}

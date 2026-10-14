@@ -1,0 +1,641 @@
+{
+  "suites": [
+    {
+      "suite": "core-2-0-625",
+      "cases": 2500,
+      "verdict_cases": 2500,
+      "summary_oracle_checks": 2500,
+      "whole_graph_oracle_checks": 2500,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 1572,
+      "mismatches": 0,
+      "wall_seconds": 0.26449240099999827,
+      "cpu_seconds": 0.263969086,
+      "peak_rss_kib": 17724,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-0-2000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 16404,
+      "mismatches": 0,
+      "wall_seconds": 2.8336681349999964,
+      "cpu_seconds": 2.832931988,
+      "peak_rss_kib": 20536,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-2000-4000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 20328,
+      "mismatches": 0,
+      "wall_seconds": 3.4458405629999973,
+      "cpu_seconds": 3.367115665,
+      "peak_rss_kib": 26068,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-4000-6000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 21808,
+      "mismatches": 0,
+      "wall_seconds": 3.1406440559999993,
+      "cpu_seconds": 3.1396849729999996,
+      "peak_rss_kib": 26476,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-6000-8000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 17028,
+      "mismatches": 0,
+      "wall_seconds": 2.952282425,
+      "cpu_seconds": 2.9509485150000003,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-8000-10000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 20200,
+      "mismatches": 0,
+      "wall_seconds": 3.2233581119999997,
+      "cpu_seconds": 3.2218280409999998,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-10000-12000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 21728,
+      "mismatches": 0,
+      "wall_seconds": 3.3063601879999993,
+      "cpu_seconds": 3.306110579,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-12000-14000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 22376,
+      "mismatches": 0,
+      "wall_seconds": 3.2123936769999943,
+      "cpu_seconds": 3.211371121,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-14000-16000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 22784,
+      "mismatches": 0,
+      "wall_seconds": 3.274152706999999,
+      "cpu_seconds": 3.26887763,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-16000-18000",
+      "cases": 24000,
+      "verdict_cases": 24000,
+      "summary_oracle_checks": 24000,
+      "whole_graph_oracle_checks": 24000,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 22472,
+      "mismatches": 0,
+      "wall_seconds": 3.2488703110000046,
+      "cpu_seconds": 3.248144678,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "core-3-18000-19683",
+      "cases": 20196,
+      "verdict_cases": 20196,
+      "summary_oracle_checks": 20196,
+      "whole_graph_oracle_checks": 20196,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 19076,
+      "mismatches": 0,
+      "wall_seconds": 2.826530875000003,
+      "cpu_seconds": 2.8264035610000002,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "closed",
+      "cases": 1024,
+      "verdict_cases": 1024,
+      "summary_oracle_checks": 1024,
+      "whole_graph_oracle_checks": 1024,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 908,
+      "mismatches": 0,
+      "wall_seconds": 0.3070237880000093,
+      "cpu_seconds": 0.30691822100000005,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "modules",
+      "cases": 512,
+      "verdict_cases": 512,
+      "summary_oracle_checks": 512,
+      "whole_graph_oracle_checks": 512,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 488,
+      "mismatches": 0,
+      "wall_seconds": 0.35780008900000837,
+      "cpu_seconds": 0.35690856400000004,
+      "peak_rss_kib": 26860,
+      "workers": 1
+    },
+    {
+      "suite": "binding",
+      "cases": 65635,
+      "verdict_cases": 0,
+      "summary_oracle_checks": 65635,
+      "whole_graph_oracle_checks": 0,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 0,
+      "mismatches": 0,
+      "wall_seconds": 18.092878756000005,
+      "cpu_seconds": 18.090032217999997,
+      "peak_rss_kib": 26860,
+      "workers": 1,
+      "ordinary_template_cases": 59049,
+      "interior_goal_cases": 6561,
+      "marked_connector_cases": 25
+    },
+    {
+      "suite": "refinement",
+      "cases": 2,
+      "verdict_cases": 2,
+      "summary_oracle_checks": 2,
+      "whole_graph_oracle_checks": 2,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 1,
+      "mismatches": 0,
+      "wall_seconds": 0.014828632999993374,
+      "cpu_seconds": 0.014994212000000007,
+      "peak_rss_kib": 41068,
+      "workers": 1,
+      "refinement_checks": 1,
+      "concrete_states": 29,
+      "abstract_states": 15,
+      "concrete_raw_edges": 132
+    },
+    {
+      "suite": "transfer",
+      "cases": 22186,
+      "verdict_cases": 2038,
+      "summary_oracle_checks": 2038,
+      "whole_graph_oracle_checks": 2038,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 1216,
+      "mismatches": 0,
+      "wall_seconds": 2.7858838360000107,
+      "cpu_seconds": 2.785243319,
+      "peak_rss_kib": 41068,
+      "workers": 1,
+      "transfer_relation_candidates": 22186,
+      "accepted_transfer_relations": 1358,
+      "transfer_implication_checks": 2116,
+      "ordinary_transfer_candidates": 6561,
+      "marked_transfer_candidates": 15625
+    },
+    {
+      "suite": "raw",
+      "cases": 2500,
+      "verdict_cases": 2500,
+      "summary_oracle_checks": 2500,
+      "whole_graph_oracle_checks": 2500,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 2500,
+      "nonlive": 1674,
+      "mismatches": 0,
+      "wall_seconds": 0.2675380029999985,
+      "cpu_seconds": 0.26797789099999997,
+      "peak_rss_kib": 41068,
+      "workers": 1,
+      "raw_goal_family_cases": 1250,
+      "raw_no_goal_family_cases": 1250
+    },
+    {
+      "suite": "named",
+      "cases": 26,
+      "verdict_cases": 26,
+      "summary_oracle_checks": 26,
+      "whole_graph_oracle_checks": 26,
+      "whole_graph_oracle_exclusions": 0,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 10,
+      "mismatches": 0,
+      "wall_seconds": 0.011595412999994892,
+      "cpu_seconds": 0.010998460000000002,
+      "peak_rss_kib": 41068,
+      "workers": 1
+    },
+    {
+      "suite": "scaling",
+      "cases": 30,
+      "verdict_cases": 30,
+      "summary_oracle_checks": 30,
+      "whole_graph_oracle_checks": 26,
+      "whole_graph_oracle_exclusions": 4,
+      "raw_semantics_oracle_checks": 0,
+      "nonlive": 15,
+      "mismatches": 0,
+      "wall_seconds": 0.4907709569999952,
+      "cpu_seconds": 0.490865365,
+      "peak_rss_kib": 41068,
+      "workers": 1
+    }
+  ],
+  "total_verdict_cases": 244828,
+  "total_summary_oracle_checks": 310463,
+  "total_whole_graph_oracle_checks": 244824,
+  "total_whole_graph_oracle_exclusions": 4,
+  "total_raw_semantics_oracle_checks": 2500,
+  "exhaustive_binding_cases": 65635,
+  "refinement_checks": 1,
+  "transfer_relation_candidates": 22186,
+  "accepted_transfer_relations": 1358,
+  "transfer_implication_checks": 2116,
+  "mismatches": 0,
+  "execution_mode": "clean",
+  "wall_seconds": 67.25933436,
+  "measured_child_cpu_seconds": 65.030554,
+  "parent_cpu_seconds": 1.670562069,
+  "peak_child_rss_kib": 47364,
+  "peak_parent_rss_kib": 41208,
+  "max_concurrent_scientific_workers": 1,
+  "environment": {
+    "operating_system": "Linux",
+    "os_release": "6.17.0-1022-azure",
+    "machine": "x86_64",
+    "python_implementation": "CPython",
+    "python_version": "3.12.14",
+    "python_executable_name": "python",
+    "resource_module": "available",
+    "process_group_api": "start_new_session plus os.killpg",
+    "ru_maxrss_native_unit": "KiB",
+    "reported_peak_rss_unit": "KiB"
+  },
+  "commands_executed_this_run": [
+    {
+      "tag": "tests",
+      "command": [
+        "python3",
+        "tests/test_core.py"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 9.698453288000003
+    },
+    {
+      "tag": "core-2-0-625",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "2",
+        "--start",
+        "0",
+        "--stop",
+        "625"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.3653019090000029
+    },
+    {
+      "tag": "core-3-0-2000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "0",
+        "--stop",
+        "2000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 2.9221774349999947
+    },
+    {
+      "tag": "core-3-2000-4000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "2000",
+        "--stop",
+        "4000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.539773357999998
+    },
+    {
+      "tag": "core-3-4000-6000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "4000",
+        "--stop",
+        "6000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.222692056999996
+    },
+    {
+      "tag": "core-3-6000-8000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "6000",
+        "--stop",
+        "8000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.0722119519999964
+    },
+    {
+      "tag": "core-3-8000-10000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "8000",
+        "--stop",
+        "10000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.3230055390000004
+    },
+    {
+      "tag": "core-3-10000-12000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "10000",
+        "--stop",
+        "12000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.425200513000007
+    },
+    {
+      "tag": "core-3-12000-14000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "12000",
+        "--stop",
+        "14000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.3229208949999958
+    },
+    {
+      "tag": "core-3-14000-16000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "14000",
+        "--stop",
+        "16000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.3733224950000107
+    },
+    {
+      "tag": "core-3-16000-18000",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "16000",
+        "--stop",
+        "18000"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 3.3729564100000005
+    },
+    {
+      "tag": "core-3-18000-19683",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "core",
+        "--out",
+        "<output>",
+        "--n",
+        "3",
+        "--start",
+        "18000",
+        "--stop",
+        "19683"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 2.921886368999992
+    },
+    {
+      "tag": "closed",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "closed",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.4153840029999998
+    },
+    {
+      "tag": "modules",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "modules",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.46529463500000645
+    },
+    {
+      "tag": "binding",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "binding",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 18.218042048
+    },
+    {
+      "tag": "refinement",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "refinement",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.11453118400000051
+    },
+    {
+      "tag": "transfer",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "transfer",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 2.8716656409999928
+    },
+    {
+      "tag": "raw",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "raw",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.36501965799999425
+    },
+    {
+      "tag": "named",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "named",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.11440524100000005
+    },
+    {
+      "tag": "scaling",
+      "command": [
+        "python3",
+        "src/campaign.py",
+        "scaling",
+        "--out",
+        "<output>"
+      ],
+      "exit_code": 0,
+      "wall_seconds": 0.6157016660000068
+    }
+  ],
+  "results_reused_after_validation": [],
+  "invalid_resume_records_recomputed": [],
+  "resume_note": "A reused suite has no current-run command receipt. It is listed only under results_reused_after_validation after its JSON, CSV, logs, suite identity, frozen case count, and retained generated inputs are checked."
+}

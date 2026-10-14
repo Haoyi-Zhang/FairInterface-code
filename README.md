@@ -15,21 +15,18 @@ neither is a refinement of a real protocol.
 
 ## Supported execution environment
 
-The reproduction entry point uses POSIX process groups and Python's `resource`
-module to enforce child timeouts and report process resource use. The verified
-path for the current targeted validation was:
-
-- Linux on x86-64;
-- CPython 3.13.5;
-- the Python standard library only;
-- one scientific child process at a time.
-
-Native Windows does not provide the required `resource` and process-group APIs,
-so `reproduce.py` exits with a clear unsupported-platform message rather than
-failing during import; the unit suite simulates the missing-resource path. A
-Linux environment is the documented runnable path.
-macOS has an explicit `ru_maxrss` bytes-to-KiB conversion in the controller but
-was not tested here; WSL was also not tested.
+The controller retains POSIX process groups/`resource` and adds a native Windows
+path using standard-library `ctypes`: kill-on-close jobs, total job CPU (kernel
+plus user, including completed descendants), and worker peak working sets.
+A virtual environment's direct `python.exe` handle can be only a launcher; its
+CPU is not full worker cost. Owned benign parent/grandchild termination and an
+arithmetic worker check this distinction. The clean runs in `results/owned-scc/`
+used Windows 11 build 28000, Intel Core i7-12700KF (12 cores/20 logical processors),
+CPython 3.12.14, no third-party Python dependencies and one scientific worker at
+a time. Fixed limits remain 20 wall seconds per child and 180 per campaign, not
+CPU/memory OS quotas. Worker peak working set is not simultaneous process-tree
+memory. The modified POSIX wrapper path, macOS and WSL were not executed here;
+earlier Linux results remain historical.
 
 Every new `summary.json` records the operating system, machine, Python
 implementation/version, interpreter basename, process-group mechanism, the
@@ -44,16 +41,20 @@ historical record stored them.
 From this directory:
 
 ```bash
-python3 reproduce.py --output reproduced
+PYTHONDONTWRITEBYTECODE=1 python3 -B reproduce.py --output reproduced
+# Repeat the same inputs; do not add the counts:
+PYTHONDONTWRITEBYTECODE=1 python3 -B -O reproduce.py --output reproduced-optimized
 ```
 
-A clean run requires a new output directory and executes 22 unit-test methods plus
+A clean run requires a new output directory and executes 25 unit-test methods plus
 19 bounded campaign chunks sequentially. It writes retained inputs, CSV/JSON
 results, certificates, per-command logs, and `summary.json`. Before accepting the
 run, the controller checks the exact suite inventory, deterministic totals,
-command exits, and the 22-test receipt. Expected deterministic totals are:
+command exits, and the 25-test receipt. Expected deterministic totals are:
 
 - 244,828 producer/checker verdict cases;
+- 244,828 paired ordinary SCC decisions on the same normalized inputs, with no
+  product exclusions (not additional scientific cases);
 - 310,463 direct summary-oracle comparisons;
 - 65,635 exhaustive two-module binding cases within that summary total;
 - 244,824 complete whole-graph product-oracle comparisons and four declared
@@ -71,7 +72,9 @@ The transfer suite's 2,038 model-verdict and 1,216 nonlive counts are retained
 aggregate fields in `results/transfer.json` and `results/transfer.stdout.txt`.
 `results/transfer.csv` contains two family summaries, not one row per model. Those
 two aggregate counts are recomputed by the transfer campaign; the CSV is not
-an independent per-model receipt.
+an independent per-model receipt. Current `transfer-costs.csv` additionally binds
+all 2,038 model evaluations to normalized-graph digests, evaluation order, mode,
+and verdict; deterministic source construction remains in `src/campaign.py`.
 
 The named-case test also exercises five empty-task boundaries in both change
 modes: true blocking, a sole goal edge, port recurrence, hidden recurrence, and
@@ -155,7 +158,12 @@ external protocol was abstracted faithfully.
   including semantic stutters at true non-goal deadlocks.
 - `src/fixtures.py`: named fixtures, including the scheduler-expanded refinement.
 - `src/campaign.py`: deterministic exhaustive/generated campaigns.
-- `tests/test_core.py`: 22 contract, algebra, separation, reference, refinement,
+- `src/monolithic.py`: ordinary whole-graph SCC decision baseline, without an
+  interface, mask product, producer/checker helper, or certificate.
+- `src/process_metrics.py`, `src/measured_worker.py`: native owned-worker
+  measurements and receipts; job CPU includes interpreter descendants.
+- `analyze_costs.py`: historical-outcome reconciliation and paired-cost analysis.
+- `tests/test_core.py`: 25 contract, algebra, separation, reference, refinement,
   resume, and corruption tests.
 - `inputs/`: named scientific fixtures.
 - `results/`: retained scientific inputs/results plus targeted validation records.
@@ -176,8 +184,8 @@ after the unchanged exact summary reconstruction and comparison. Both arc kinds
 remain available to prefix reachability in both change modes; only recurrent
 checks filter marked arcs. `python -B tests/reachability_regression.py` provides
 a portable independent finite regression and runs explicitly in CI before the
-unchanged 22-test/full-campaign receipt. It does not establish a speedup, new
-protocol guarantee or completion of the POSIX campaign on another platform.
+25-test/full-campaign receipt. It does not establish a speedup or protocol
+guarantee. CI configuration is retained; no remote CI execution is asserted.
 
 The producer and checker implement different summary algorithms but share the
 finite model semantics and parser. The direct summary oracle reconstructs
@@ -194,3 +202,23 @@ transfer campaign covers a small family; neither derives an abstraction from
 source code. Agreement is strong finite implementation evidence, not a
 machine-checked general theorem, independent review, or evidence about an
 unprovided protocol.
+
+## Paired-cost interpretation
+
+`results/owned-scc/` retains both clean full runs, generated-input JSONL,
+scientific CSV/JSON, worker mode/bytecode/peak-memory receipts and timing rows.
+The comparison is regenerated by:
+
+```bash
+python3 -B analyze_costs.py results/owned-scc/normal results/owned-scc/optimized --output cost-check
+```
+
+The fixed order is producer, independent checker, then SCC decision. Each sees
+the same already-normalized graph and change mode. Full process-tree CPU and
+campaign wall time additionally cover input generation/normalization, module
+export/join, all oracles, source binding, serialization, IO, tests, process startup
+and controller validation. The baseline has the same Boolean semantics, but
+does not emit a consumer-checkable certificate. No standalone end-to-end solver
+comparison, incremental maintenance gain, confidence interval, speedup, native
+protocol deployment or novel SCC criterion is established. The two modes repeat
+the same population; all historical negative outcomes and files are retained.

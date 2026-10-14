@@ -189,14 +189,26 @@ def close_join(graph: Graph, joined: dict) -> dict:
     }:
         raise ValueError('malformed joined interface')
     ports = list(graph.ports)
-    if len(joined['enabled']) != len(ports) or len(joined['outgoing']) != len(ports):
+    if (type(joined['enabled']) is not list or type(joined['outgoing']) is not list
+        or len(joined['enabled']) != len(ports) or len(joined['outgoing']) != len(ports)):
         raise ValueError('joined interface boundary length mismatch')
     position = {port: index for index, port in enumerate(ports)}
+    if type(joined['divergence']) is not list or any(
+        type(port) is not int for port in joined['divergence']
+    ):
+        raise ValueError('malformed joined divergence field')
     if set(joined['divergence']) - set(ports):
         raise ValueError('divergence outside the exact boundary')
 
     capacities: dict[tuple[int, int, bool], int] = {}
-    for source, target, mask, change in joined['arcs']:
+    if type(joined['arcs']) is not list:
+        raise ValueError('malformed joined arc field')
+    for row in joined['arcs']:
+        if (type(row) is not list or len(row) != 4
+            or any(type(value) is not int for value in row[:3])
+            or type(row[3]) is not bool):
+            raise ValueError('malformed joined interface arc')
+        source, target, mask, change = row
         if source not in position or target not in position:
             raise ValueError('summary arc outside the exact boundary')
         if mask < 0 or mask > graph.full:

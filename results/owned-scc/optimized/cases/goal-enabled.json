@@ -1,0 +1,29 @@
+{
+  "states": 2,
+  "tasks": 1,
+  "coloring": "weak-service",
+  "edges": [
+    [
+      0,
+      0,
+      0,
+      false
+    ],
+    [
+      0,
+      1,
+      1,
+      false
+    ]
+  ],
+  "initial": [
+    0
+  ],
+  "goals": [
+    1
+  ],
+  "ports": [
+    0
+  ],
+  "description": ""
+}

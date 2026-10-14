@@ -1,0 +1,21 @@
+{
+  "suite": "raw",
+  "cases": 2500,
+  "verdict_cases": 2500,
+  "summary_oracle_checks": 2500,
+  "whole_graph_oracle_checks": 2500,
+  "whole_graph_oracle_exclusions": 0,
+  "raw_semantics_oracle_checks": 2500,
+  "nonlive": 1674,
+  "mismatches": 0,
+  "wall_seconds": 0.34911660000216216,
+  "cpu_seconds": 0.34375,
+  "peak_rss_kib": 23528,
+  "workers": 1,
+  "monolithic_checks": 2500,
+  "producer_ns": 110834600,
+  "checker_ns": 55250900,
+  "monolithic_ns": 25077200,
+  "raw_goal_family_cases": 1250,
+  "raw_no_goal_family_cases": 1250
+}

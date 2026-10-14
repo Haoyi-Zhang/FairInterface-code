@@ -28,9 +28,11 @@ except ModuleNotFoundError:  # Native Windows does not provide this module.
     resource = None  # type: ignore[assignment]
 
 ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT / 'src'))
+from process_metrics import self_peak_kib, WindowsJob
 WHOLE_TIMEOUT_SECONDS = 180.0
 CHILD_TIMEOUT_SECONDS = 20.0
-EXPECTED_TEST_METHODS = 22
+EXPECTED_TEST_METHODS = 25
 
 EXPECTED_TOTALS = {
     "total_verdict_cases": 244_828,
@@ -175,6 +177,8 @@ def _portable_command(argv: list[str], output: Path) -> list[str]:
             result.append("python3")
         elif value == str(output):
             result.append("<output>")
+        elif value.startswith(str(output) + os.sep):
+            result.append('<output>/' + Path(value).name)
         else:
             result.append(value)
     return result
@@ -352,6 +356,37 @@ def _validate_suite_bundle(output: Path, job: Job) -> dict[str, Any]:
                 f"generated-input count mismatch for {filename}: "
                 f"{observed_lines} != {expected_lines}"
             )
+    # Historical bundles have no paired SCC timing evidence. Never infer it
+    # from the old verdict totals; validate every row when it is present.
+    if 'monolithic_checks' in result:
+        if any(type(result.get(field)) is not int or result[field]<0 for field in
+               ('monolithic_checks','producer_ns','checker_ns','monolithic_ns')):
+            raise ValueError('invalid paired-cost integer field')
+        cost_path=output/f'{tag}-costs.csv'
+        if not cost_path.is_file():
+            raise ValueError('missing paired-cost CSV')
+        with cost_path.open(newline='') as handle:
+            reader=csv.DictReader(handle)
+            expected=['evaluation','normalized_graph_sha256','states','tasks',
+                      'normalized_edges','ports','finite_changes','live',
+                      'producer_ns','checker_ns','monolithic_ns']
+            if reader.fieldnames != expected:
+                raise ValueError('invalid paired-cost header')
+            sums=[0,0,0]
+            count=0
+            for row in reader:
+                if (int(row['evaluation']) != count
+                    or not re.fullmatch(r'[0-9a-f]{64}',row['normalized_graph_sha256'])
+                    or row['finite_changes'] not in ('0','1') or row['live'] not in ('0','1')):
+                    raise ValueError('invalid paired-cost binding')
+                values=[int(row[field]) for field in expected[-3:]]
+                if any(value<0 for value in values):raise ValueError('negative measured cost')
+                sums=[total+value for total,value in zip(sums,values)]
+                count+=1
+            if count != result['monolithic_checks'] or count != result['verdict_cases']:
+                raise ValueError('paired-cost verdict coverage drift')
+            if sums != [result[field] for field in expected[-3:]]:
+                raise ValueError('paired-cost aggregate drift')
     return result
 
 
@@ -389,6 +424,7 @@ def _aggregate_suites(suites: list[dict[str, Any]]) -> dict[str, Any]:
     """Build the frozen scientific totals independently of execution provenance."""
     return {
         "suites": suites,
+        "total_monolithic_checks": sum(suite.get('monolithic_checks',0) for suite in suites),
         "total_verdict_cases": sum(suite["verdict_cases"] for suite in suites),
         "total_summary_oracle_checks": sum(
             suite["summary_oracle_checks"] for suite in suites
@@ -430,6 +466,11 @@ def _aggregate_suites(suites: list[dict[str, Any]]) -> dict[str, Any]:
 
 
 def _require_supported_environment() -> None:
+    if os.name == 'nt':
+        self_peak_kib()  # Fail closed if the native API cannot be queried.
+        job = WindowsJob()
+        job.close()
+        return
     if (
         os.name != "posix"
         or resource is None
@@ -466,14 +507,18 @@ def _environment_record() -> dict[str, Any]:
         "python_implementation": platform.python_implementation(),
         "python_version": platform.python_version(),
         "python_executable_name": Path(sys.executable).name,
-        "resource_module": "available",
-        "process_group_api": "start_new_session plus os.killpg",
-        "ru_maxrss_native_unit": _native_rss_unit(),
+        "resource_module": "available" if resource is not None else "unavailable",
+        "process_group_api": "Windows kill-on-close job" if os.name == 'nt' else "start_new_session plus os.killpg",
+        "ru_maxrss_native_unit": "not applicable" if os.name == 'nt' else _native_rss_unit(),
+        "memory_api": "K32GetProcessMemoryInfo PeakWorkingSetSize" if os.name == 'nt' else "getrusage ru_maxrss",
+        "child_cpu_api": "QueryInformationJobObject total kernel plus user, including descendants" if os.name == 'nt' else "getrusage RUSAGE_CHILDREN",
+        "optimize": sys.flags.optimize,
         "reported_peak_rss_unit": "KiB",
     }
 
 
-def _validate_result(result: dict[str, Any], output: Path, jobs: list[Job]) -> None:
+def _validate_result(result: dict[str, Any], output: Path, jobs: list[Job],
+                     expected_test_methods: int = EXPECTED_TEST_METHODS) -> None:
     suites = result["suites"]
     observed_suite_cases = {entry["suite"]: entry["cases"] for entry in suites}
     if observed_suite_cases != EXPECTED_SUITE_CASES:
@@ -488,10 +533,12 @@ def _validate_result(result: dict[str, Any], output: Path, jobs: list[Job]) -> N
             raise RuntimeError(
                 f"deterministic total drift for {key}: {observed!r} != {expected!r}"
             )
+    if result['execution_mode']=='clean' and result['total_monolithic_checks'] != 244_828:
+        raise RuntimeError('clean run lacks complete ordinary SCC baseline coverage')
 
     test_log = (output / "tests.stderr.txt").read_text()
     methods = len(re.findall(r"^test_.* \.\.\. ok$", test_log, re.MULTILINE))
-    if methods != EXPECTED_TEST_METHODS or not re.search(r"^OK$", test_log, re.MULTILINE):
+    if methods != expected_test_methods or not re.search(r"^OK$", test_log, re.MULTILINE):
         raise RuntimeError(
             f"unit-test receipt drift: found {methods} passing methods and "
             f"OK={bool(re.search(r'^OK$', test_log, re.MULTILINE))}"
@@ -567,32 +614,54 @@ def main() -> None:
         stdout_path = output / f"{tag}.stdout.txt"
         stderr_path = output / f"{tag}.stderr.txt"
         print(f"[reproduce] {tag}", file=sys.stderr, flush=True)
-
+        metrics_path = output / f'{tag}.process.json'
+        flags = ['-B'] + ['-O'] * sys.flags.optimize
+        measured_argv = [sys.executable, *flags, 'src/measured_worker.py',
+                         str(metrics_path), *argv[1:]]
+        job = WindowsJob() if os.name == 'nt' else None
         with stdout_path.open("w") as stdout_handle, stderr_path.open("w") as stderr_handle:
             process = subprocess.Popen(
-                argv,
+                measured_argv,
                 cwd=ROOT,
                 text=True,
                 stdout=stdout_handle,
                 stderr=stderr_handle,
-                start_new_session=True,
+                start_new_session=os.name != 'nt',
             )
             try:
+                if job is not None:
+                    job.assign(process)
                 process.wait(timeout=min(CHILD_TIMEOUT_SECONDS, remaining))
+                measured_cpu = job.cpu_seconds() if job is not None else None
             except subprocess.TimeoutExpired:
-                try:
-                    os.killpg(process.pid, signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
+                if job is not None:
+                    job.terminate()
+                else:
+                    try:
+                        os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
                 process.wait()
                 raise TimeoutError(f"bounded command timed out: {tag}") from None
+            except BaseException:
+                process.kill()
+                process.wait()
+                raise
+            finally:
+                if job is not None:
+                    job.close()
 
+        measurement = _load_json_object(metrics_path, f'{tag}.process.json')
         commands.append(
             {
                 "tag": tag,
-                "command": _portable_command(argv, output),
+                "command": _portable_command(measured_argv, output),
                 "exit_code": process.returncode,
                 "wall_seconds": time.monotonic() - command_start,
+                "child_cpu_seconds": measured_cpu,
+                "peak_rss_kib": measurement['peak_rss_kib'],
+                "optimize": measurement['optimize'],
+                "dont_write_bytecode": measurement['dont_write_bytecode'],
             }
         )
         if process.returncode != 0:
@@ -613,18 +682,19 @@ def main() -> None:
         {key: value for key, value in entry.items() if key != "result"}
         for entry in reused_with_results
     ]
-    assert resource is not None
     result.update(
         {
             "execution_mode": "resume" if args.resume else "clean",
             "wall_seconds": time.monotonic() - start,
             "measured_child_cpu_seconds": (
+                sum(command['child_cpu_seconds'] for command in commands)
+                if os.name == 'nt' else
                 resource.getrusage(resource.RUSAGE_CHILDREN).ru_utime
                 + resource.getrusage(resource.RUSAGE_CHILDREN).ru_stime
             ),
             "parent_cpu_seconds": time.process_time(),
-            "peak_child_rss_kib": _rss_kib(resource.RUSAGE_CHILDREN),
-            "peak_parent_rss_kib": _rss_kib(resource.RUSAGE_SELF),
+            "peak_child_rss_kib": max(command['peak_rss_kib'] for command in commands),
+            "peak_parent_rss_kib": self_peak_kib(),
             "max_concurrent_scientific_workers": 1,
             "environment": _environment_record(),
             "commands_executed_this_run": commands,

@@ -1,0 +1,19 @@
+{
+  "suite": "scaling",
+  "cases": 30,
+  "verdict_cases": 30,
+  "summary_oracle_checks": 30,
+  "whole_graph_oracle_checks": 26,
+  "whole_graph_oracle_exclusions": 4,
+  "raw_semantics_oracle_checks": 0,
+  "nonlive": 15,
+  "mismatches": 0,
+  "wall_seconds": 0.5613461000029929,
+  "cpu_seconds": 0.515625,
+  "peak_rss_kib": 28444,
+  "workers": 1,
+  "monolithic_checks": 30,
+  "producer_ns": 13698000,
+  "checker_ns": 511252700,
+  "monolithic_ns": 2792300
+}

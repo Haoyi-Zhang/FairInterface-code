@@ -1,0 +1,15 @@
+{
+  "suite": "closed",
+  "cases": 1024,
+  "verdict_cases": 1024,
+  "summary_oracle_checks": 1024,
+  "whole_graph_oracle_checks": 1024,
+  "whole_graph_oracle_exclusions": 0,
+  "raw_semantics_oracle_checks": 0,
+  "nonlive": 908,
+  "mismatches": 0,
+  "wall_seconds": 0.3070237880000093,
+  "cpu_seconds": 0.30691822100000005,
+  "peak_rss_kib": 26860,
+  "workers": 1
+}

@@ -1,0 +1,19 @@
+{
+  "suite": "modules",
+  "cases": 512,
+  "verdict_cases": 512,
+  "summary_oracle_checks": 512,
+  "whole_graph_oracle_checks": 512,
+  "whole_graph_oracle_exclusions": 0,
+  "raw_semantics_oracle_checks": 0,
+  "nonlive": 488,
+  "mismatches": 0,
+  "wall_seconds": 0.2232746999943629,
+  "cpu_seconds": 0.21875,
+  "peak_rss_kib": 23760,
+  "workers": 1,
+  "monolithic_checks": 512,
+  "producer_ns": 37017800,
+  "checker_ns": 21912200,
+  "monolithic_ns": 7250700
+}
