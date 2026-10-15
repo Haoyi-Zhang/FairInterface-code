@@ -86,5 +86,4 @@ boundary against Boolean/integer aliases and malformed list shapes. Native
 Windows job accounting includes interpreter descendants; the arithmetic worker
 checks that its self CPU is not lost when `python.exe` is a launcher. The benign
 parent/grandchild control checks job termination. These tests do not establish
-an untrusted-process sandbox or native protocol deployment. The paper's new
-declaration reports AI assistance without asserting human sign-off.
+an untrusted-process sandbox or native protocol deployment.
