@@ -38,12 +38,12 @@ historical record stored them.
 
 ## One-command reproduction
 
-From this directory:
+From this directory, choose a fresh external output parent as `OWNED_OUTPUT`:
 
 ```bash
-PYTHONDONTWRITEBYTECODE=1 python3 -B reproduce.py --output reproduced
+PYTHONDONTWRITEBYTECODE=1 python3 -B reproduce.py --output "$OWNED_OUTPUT/reproduced"
 # Repeat the same inputs; do not add the counts:
-PYTHONDONTWRITEBYTECODE=1 python3 -B -O reproduce.py --output reproduced-optimized
+PYTHONDONTWRITEBYTECODE=1 python3 -B -O reproduce.py --output "$OWNED_OUTPUT/reproduced-optimized"
 ```
 
 A clean run requires a new output directory and executes 25 unit-test methods plus
@@ -92,7 +92,7 @@ maxima, not a simultaneous sum. The run's OS and interpreter were not captured.
 Resume is explicit:
 
 ```bash
-python3 reproduce.py --output reproduced --resume
+python3 reproduce.py --output "$OWNED_OUTPUT/reproduced" --resume
 ```
 
 A `.json` marker alone is never trusted. Before a campaign chunk is skipped, the
@@ -125,16 +125,21 @@ bundles, and is recorded in `results/resume-validation/damaged-named-summary.jso
 
 ## Focused commands
 
+Create the external `OWNED_OUTPUT` directory before running the CLI examples.
+The CLI does not create parent directories and refuses existing output files;
+use a fresh directory for each smoke run. Campaign outputs below also stay under
+that parent.
+
 ```bash
 python3 tests/test_core.py
-python3 src/cli.py synthesize inputs/role-reset.json role-reset.cert.json
-python3 src/cli.py check inputs/role-reset.json role-reset.cert.json
-python3 src/cli.py synthesize inputs/role-reset.json role-reset-finite.cert.json --finite-changes
-python3 src/cli.py bind inputs/late-binding-family.json bound-interface.json
-python3 src/campaign.py binding --out binding-check
-python3 src/campaign.py refinement --out refinement-check
-python3 src/campaign.py transfer --out transfer-check
-python3 src/campaign.py raw --out raw-check
+python3 src/cli.py synthesize inputs/role-reset.json "$OWNED_OUTPUT/role-reset.cert.json"
+python3 src/cli.py check inputs/role-reset.json "$OWNED_OUTPUT/role-reset.cert.json"
+python3 src/cli.py synthesize inputs/role-reset.json "$OWNED_OUTPUT/role-reset-finite.cert.json" --finite-changes
+python3 src/cli.py bind inputs/late-binding-family.json "$OWNED_OUTPUT/bound-interface.json"
+python3 src/campaign.py binding --out "$OWNED_OUTPUT/binding-check"
+python3 src/campaign.py refinement --out "$OWNED_OUTPUT/refinement-check"
+python3 src/campaign.py transfer --out "$OWNED_OUTPUT/transfer-check"
+python3 src/campaign.py raw --out "$OWNED_OUTPUT/raw-check"
 ```
 
 `VALID` means that the checker recomputed the normalized graph and boundary
@@ -185,7 +190,8 @@ remain available to prefix reachability in both change modes; only recurrent
 checks filter marked arcs. `python -B tests/reachability_regression.py` provides
 a portable independent finite regression and runs explicitly in CI before the
 25-test/full-campaign receipt. It does not establish a speedup or protocol
-guarantee. CI configuration is retained; no remote CI execution is asserted.
+guarantee. The scientific workflow runs this regression before the full campaign;
+exact-head run results are available in the repository's Actions tab.
 
 The producer and checker implement different summary algorithms but share the
 finite model semantics and parser. The direct summary oracle reconstructs
